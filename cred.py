@@ -11,8 +11,8 @@ request = { "Initiator":"georgeey",
     "PartyA":"174379",
     "IdentifierType":"4",
     "Remarks":"first trial is a success",
-    "QueueTimeOutURL":"http://portfoliombugua.herokuapp.com/",
-    "ResultURL":"http://portfoliombugua.herokuapp.com/"
+    "QueueTimeOutURL":" ",
+    "ResultURL":" "
     }
 
 response = requests.post(api_url, json = request, headers=headers)
