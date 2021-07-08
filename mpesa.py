@@ -1,27 +1,33 @@
 import requests
-from requests.auth import HTTPBasicAuth
 import base64
 from datetime import datetime
 
-consumer_key = "CONSUMER_KEY"
-consumer_secret = "CONSUMER_SECRET"
-api_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+business_shortcode_test = "174379"
+passkey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
 
-r = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
+password = business_shortcode_test + passkey + timestamp
 
-access_token = 'iARKpGqcGE8uFpmsWD4bRtqAHESL'
-api_url = "https://sandbox.safaricom.co.ke/mpesa/accountbalance/v1/query"
+otp = base64.b64encode(password.encode())
+decode_otp = otp.decode('utf-8')
+
+access_token = "KMt35ArPbWPgC4HXXo3G3HprgGSK"
+api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
 headers = {"Authorization": "Bearer %s" % access_token}
 
-request = { "Initiator":"georgeey",
-      "SecurityCredential":"TRU6o8vGrgE5qd5uveWKB/RAnRaFQofrG/oSuu3q6Lw7LXDKcZfK6Cum6fUAm+A17DSyq+2YjIpWBoGAa/AICSrN0eD4rDU0qs9UUeDLc8tTOi2GZoGxcjg1XzUtav5EC5IOmznr0wtFOLcW/abgRWgjLyykn7LlVCKNieWciaFkpsyUiHXJy+C/Cv35QatL5YeAN4HddnaduKMbrMf+hahbQSsrjBD+PdHZeqPuHXBiLy1EcRTVrGFXMftqhT8+TpJHq8TGg/zbJuctb2WcaGAhpqjgIJvg5KjwnbB65gFbxFGBBdedS58b/IAXyqLdio0BrPWvlT9rKxB6sebDcg==",
-      "CommandID":"AccountBalance",
-      "PartyA":"174379",
-      "IdentifierType":"4",
-      "Remarks":"first trial is a success",
-      "QueueTimeOutURL":"https://e765deaff768.ngrok.io/",
-      "ResultURL":"https://e765deaff768.ngrok.io/"
-      }
+request = {"BusinessShortCode":"174379",
+            "Password": decode_otp,
+            "Timestamp": timestamp,    
+            "TransactionType": "CustomerBuyGoodsOnline",
+            "Amount":"1",    
+            "PartyA":"254700014463",    
+            "PartyB":"174379",    
+            "PhoneNumber":"254700014463",    
+            "CallBackURL":"https://79372821.ngrok.io/api/v1/c2b/confirmation",    
+            "AccountReference":"Transacty",    
+            "TransactionDesc":"Pay Transacty"
+}
+
 
 response = requests.post(api_url, json = request, headers=headers)
 print (response.text)
