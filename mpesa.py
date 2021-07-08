@@ -25,7 +25,7 @@ request = {"BusinessShortCode":"174379",
             "PhoneNumber":"254700014463",    
             "CallBackURL":"https://79372821.ngrok.io/api/v1/c2b/confirmation",    
             "AccountReference":"Transacty",    
-            "TransactionDesc":"Pay Transacty"
+            "TransactionDesc":"Transacty"
 }
 
 
